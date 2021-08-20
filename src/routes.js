@@ -11,6 +11,7 @@ import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import Create from './pages/Create';
+import Edit from './pages/Edit';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ export default function Router() {
             { path: '/', element: <Navigate to="/dashboard/user/list" replace /> },
             { path: 'list', element: <User /> },
             { path: 'create', element: <Create /> },
-            { path: 'edit', element: <h1>User is edited</h1> }
+            { path: 'edit', element: <Edit /> }
           ]
         },
         { path: 'products', element: <Products /> },
