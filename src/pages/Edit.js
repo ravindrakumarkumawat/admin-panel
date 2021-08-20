@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // material
-import { Container, Stack, Typography, Card, Grid, TextField, Button } from '@material-ui/core';
+import {
+  Container,
+  Stack,
+  Typography,
+  Card,
+  Grid,
+  TextField,
+  Button,
+  Alert
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 // components
-import { getOneUser } from '../services/User';
+import { getOneUser, updateUser } from '../services/User';
 import Page from '../components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +60,7 @@ export default function Edit() {
 
   useEffect(() => {
     getSingleUser();
-  });
+  }, [isSuccess]);
 
   const getSingleUser = async () => {
     const res = await getOneUser(id);
@@ -70,8 +79,112 @@ export default function Edit() {
     }
   };
 
+  const handleChanges = async () => {
+    if (!name) {
+      setError({ ...error, name: 'Name is required' });
+    }
+
+    if (!email) {
+      setError({ ...error, email: 'Email is required' });
+    }
+
+    if (!phone) {
+      setError({ ...error, phone: 'Phone number is required' });
+    }
+
+    if (!country) {
+      setError({ ...error, country: 'Country is required' });
+    }
+
+    if (!state) {
+      setError({ ...error, state: 'State is required' });
+    }
+
+    if (!city) {
+      setError({ ...error, city: 'City is required' });
+    }
+
+    if (!address) {
+      setError({ ...error, address: 'Address is required' });
+    }
+
+    if (!zipcode) {
+      setError({ ...error, zipcode: 'Zipcode is required' });
+    }
+
+    if (!company) {
+      setError({ ...error, company: 'Company is required' });
+    }
+
+    if (!role) {
+      setError({ ...error, role: 'Role is required' });
+    }
+
+    if (
+      name &&
+      email &&
+      phone &&
+      country &&
+      state &&
+      city &&
+      address &&
+      zipcode &&
+      company &&
+      role
+    ) {
+      const data = {
+        name,
+        email,
+        phone,
+        country,
+        state,
+        city,
+        address,
+        zipcode,
+        company,
+        role
+      };
+
+      if (!id) {
+        return;
+      }
+      const updatedUser = await updateUser(id, data);
+      console.log(updatedUser);
+      if (updatedUser.data.success) {
+        setError({
+          name: '',
+          email: '',
+          phone: '',
+          country: '',
+          state: '',
+          city: '',
+          address: '',
+          zipcode: '',
+          company: '',
+          role: ''
+        });
+        setName('');
+        setEmail('');
+        setPhone('');
+        setCountry('');
+        setState('');
+        setCity('');
+        setAddress('');
+        setZipcode('');
+        setCompany('');
+        setRole('');
+        setIsSuccess(true);
+      }
+    }
+  };
+
   return (
     <Page title="User | Minimal-UI">
+      {isSuccess && (
+        <Alert variant="outlined" severity="success">
+          This is a success alert — check it out!
+        </Alert>
+      )}
       <Container>
         <Stack direction="row" alignItem="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -228,7 +341,9 @@ export default function Edit() {
                 </Grid>
               </form>
               <Stack direction="row" alignItems="flex-end" justifyContent="flex-end" mb={5} mr={3}>
-                <Button variant="contained">Save Changes</Button>
+                <Button variant="contained" onClick={handleChanges}>
+                  Save Changes
+                </Button>
               </Stack>
             </Card>
           </Grid>
