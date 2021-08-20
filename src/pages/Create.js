@@ -173,11 +173,11 @@ export default function Create() {
               <form className={classes.root} noValidate autoComplete="off">
                 <Grid>
                   <TextField
-                    // error
+                    error={error.name}
                     id="outlined-error"
                     label="Full Name"
                     value={name}
-                    helperText="Incorrect entry."
+                    helperText={error.name}
                     variant="outlined"
                     onChange={(e) => {
                       setName(e.target.value);
