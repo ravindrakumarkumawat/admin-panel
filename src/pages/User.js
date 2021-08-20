@@ -245,7 +245,7 @@ export default function User() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu handleDelete={() => handleDelete(_id)} />
+                            <UserMoreMenu handleDelete={() => handleDelete(_id)} id={_id} />
                           </TableCell>
                         </TableRow>
                       );
