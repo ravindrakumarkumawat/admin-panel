@@ -30,7 +30,13 @@ export default function Router() {
             { path: '/', element: <Navigate to="/dashboard/user/list" replace /> },
             { path: 'list', element: <User /> },
             { path: 'create', element: <Create /> },
-            { path: 'edit/:id', element: <Edit /> }
+            {
+              path: 'edit',
+              children: [
+                { path: '/', element: <Navigate to="/dashboard/user/list" replace /> },
+                { path: '/:id', element: <Edit /> }
+              ]
+            }
           ]
         },
         { path: 'products', element: <Products /> },

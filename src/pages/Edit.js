@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 // material
 import { Container, Stack, Typography, Card, Grid, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 // components
+import { getOneUser } from '../services/User';
 import Page from '../components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Edit() {
   const classes = useStyles();
-  const [fullname, setFullName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
@@ -32,6 +34,42 @@ export default function Edit() {
   const [zipcode, setZipcode] = useState('');
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { id } = useParams();
+  const [error, setError] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    country: '',
+    state: '',
+    city: '',
+    address: '',
+    zipcode: '',
+    company: '',
+    role: ''
+  });
+
+  useEffect(() => {
+    getSingleUser();
+  });
+
+  const getSingleUser = async () => {
+    const res = await getOneUser(id);
+    console.log(res);
+    if (res.data.success) {
+      setName(res.data.result.name);
+      setEmail(res.data.result.email);
+      setPhone(res.data.result.phone);
+      setCountry(res.data.result.country);
+      setState(res.data.result.state);
+      setCity(res.data.result.city);
+      setAddress(res.data.result.address);
+      setZipcode(res.data.result.zipcode);
+      setCompany(res.data.result.company);
+      setRole(res.data.result.role);
+    }
+  };
+
   return (
     <Page title="User | Minimal-UI">
       <Container>
@@ -50,13 +88,17 @@ export default function Edit() {
               <form className={classes.root} noValidate autoComplete="off">
                 <Grid>
                   <TextField
-                    // error
+                    error={error.name}
                     id="outlined-error"
                     label="Full Name"
-                    value={fullname}
-                    helperText="Incorrect entry."
+                    value={name}
+                    helperText={error.name}
                     variant="outlined"
-                    onChange={(e) => setFullName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, name: '' });
+                    }}
                   />
                   <TextField
                     // error
@@ -65,7 +107,11 @@ export default function Edit() {
                     value={email}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, email: '' });
+                    }}
                   />
                 </Grid>
                 <Grid>
@@ -76,7 +122,11 @@ export default function Edit() {
                     value={phone}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, phone: '' });
+                    }}
                   />
                   <TextField
                     // error
@@ -85,7 +135,11 @@ export default function Edit() {
                     value={country}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setCountry(e.target.value)}
+                    onChange={(e) => {
+                      setCountry(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, country: '' });
+                    }}
                   />
                 </Grid>
                 <Grid>
@@ -96,7 +150,11 @@ export default function Edit() {
                     value={state}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setState(e.target.value)}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, state: '' });
+                    }}
                   />
                   <TextField
                     // error
@@ -105,7 +163,11 @@ export default function Edit() {
                     value={city}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, city: '' });
+                    }}
                   />
                 </Grid>
                 <Grid>
@@ -116,7 +178,11 @@ export default function Edit() {
                     value={address}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setAddress(e.target.value)}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, address: '' });
+                    }}
                   />
                   <TextField
                     // error
@@ -125,7 +191,11 @@ export default function Edit() {
                     value={zipcode}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setZipcode(e.target.value)}
+                    onChange={(e) => {
+                      setZipcode(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, zipcode: '' });
+                    }}
                   />
                 </Grid>
                 <Grid>
@@ -136,7 +206,11 @@ export default function Edit() {
                     value={company}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setCompany(e.target.value)}
+                    onChange={(e) => {
+                      setCompany(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, company: '' });
+                    }}
                   />
                   <TextField
                     // error
@@ -145,7 +219,11 @@ export default function Edit() {
                     value={role}
                     helperText="Incorrect entry."
                     variant="outlined"
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => {
+                      setRole(e.target.value);
+                      setIsSuccess(false);
+                      setError({ ...error, role: '' });
+                    }}
                   />
                 </Grid>
               </form>
