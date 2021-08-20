@@ -21,7 +21,7 @@ import {
   TablePagination
 } from '@material-ui/core';
 // components
-import { getUser, removeUser } from '../services/User';
+import { getUser, removeBulkUser, removeUser } from '../services/User';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -90,6 +90,7 @@ export default function User() {
     const res = await getUser();
     console.log(res.data.result);
     setUserList(res.data.result);
+    setIsDelete(false);
   };
 
   const handleRequestSort = (event, property) => {
@@ -155,7 +156,16 @@ export default function User() {
   };
 
   const handleMultipleDelete = async () => {
-    const res = await removeUser();
+    if (selected.length > 0) {
+      const data = {
+        lists: [...selected]
+      };
+      const result = await removeBulkUser(data);
+      if (result.data.success) {
+        setIsDelete(true);
+        setSelected([]);
+      }
+    }
   };
 
   return (
@@ -180,6 +190,7 @@ export default function User() {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            handleMultipleDelete={handleMultipleDelete}
           />
 
           <Scrollbar>
