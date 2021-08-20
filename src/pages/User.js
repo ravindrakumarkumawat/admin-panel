@@ -21,7 +21,7 @@ import {
   TablePagination
 } from '@material-ui/core';
 // components
-import { getUser } from '../services/User';
+import { getUser, removeUser } from '../services/User';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -80,10 +80,11 @@ export default function User() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [userList, setUserList] = useState([]);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     getUserList();
-  });
+  }, [isDelete]);
 
   const getUserList = async () => {
     const res = await getUser();
@@ -143,6 +144,13 @@ export default function User() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  const handleDelete = async (id) => {
+    const res = await removeUser(id);
+    if (res.data.success) {
+      setIsDelete(true);
+    }
+  };
+
   return (
     <Page title="User | Minimal-UI">
       <Container>
@@ -183,13 +191,13 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                      const { _id, name, role, status, company, avatarUrl, isVerified } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={id}
+                          key={_id}
                           tabIndex={-1}
                           role="checkbox"
                           selected={isItemSelected}
@@ -219,7 +227,7 @@ export default function User() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu />
+                            <UserMoreMenu handleDelete={() => handleDelete(_id)} />
                           </TableCell>
                         </TableRow>
                       );
