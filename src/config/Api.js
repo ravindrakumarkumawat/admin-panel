@@ -5,6 +5,7 @@ export const endPoints = {
     GET_LIST: `${BASE_URL}/users`,
     CREATE: `${BASE_URL}/user`,
     UPDATE: `${BASE_URL}/user`,
-    REMOVE: `${BASE_URL}/user`
+    REMOVE: `${BASE_URL}/user`,
+    REMOVE_BULK: `${BASE_URL}/users/delete`
   }
 };

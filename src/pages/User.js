@@ -100,18 +100,20 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = userList.map((n) => n._id);
+      console.log(newSelecteds, 'Selected');
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    console.log('sigle selecr', selectedIndex);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -122,6 +124,7 @@ export default function User() {
         selected.slice(selectedIndex + 1)
       );
     }
+    console.log('sigle selecr', newSelected);
     setSelected(newSelected);
   };
 
@@ -150,6 +153,10 @@ export default function User() {
       setIsDelete(true);
     }
   };
+
+  const handleMultipleDelete = async () => {
+    const res = await removeUser();
+  }
 
   return (
     <Page title="User | Minimal-UI">
@@ -192,7 +199,7 @@ export default function User() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       const { _id, name, role, status, company, avatarUrl, isVerified } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const isItemSelected = selected.indexOf(_id) !== -1;
 
                       return (
                         <TableRow
@@ -206,7 +213,7 @@ export default function User() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, name)}
+                              onChange={(event) => handleClick(event, _id)}
                             />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
