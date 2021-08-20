@@ -10,6 +10,7 @@ import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
+import Create from './pages/Create';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ export default function Router() {
           children: [
             { path: '/', element: <Navigate to="/dashboard/user/list" replace /> },
             { path: 'list', element: <User /> },
-            { path: 'create', element: <h1>User is created</h1> },
+            { path: 'create', element: <Create /> },
             { path: 'edit', element: <h1>User is edited</h1> }
           ]
         },
