@@ -156,7 +156,7 @@ export default function User() {
 
   const handleMultipleDelete = async () => {
     const res = await removeUser();
-  }
+  };
 
   return (
     <Page title="User | Minimal-UI">
