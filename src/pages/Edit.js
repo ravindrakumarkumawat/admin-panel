@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles';
 // components
 import { getOneUser, updateUser } from '../services/User';
 import Page from '../components/Page';
+import UserUploadProfile from '../components/_dashboard/user/UserUploadProfile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -194,7 +195,9 @@ export default function Edit() {
 
         <Stack direction="row" justifyContent="space-between" mb={5} spacing={3}>
           <Grid item xs={6} sm={4}>
-            <Card className={classes.card}>xs=6 sm=4</Card>
+            <Card className={classes.card}>
+              <UserUploadProfile />
+            </Card>
           </Grid>
           <Grid item xs={18} sm={8}>
             <Card className={classes.card}>
