@@ -50,7 +50,6 @@
     "antd": "^4.16.12",
     "apexcharts": "^3.27.3",
     "axios": "^0.21.1",
-    "bootstrap": "^5.1.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.23.0",
     "faker": "^5.5.3",
