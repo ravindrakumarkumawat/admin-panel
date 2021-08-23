@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/styles';
 // components
 import { createUser } from '../services/User';
 import Page from '../components/Page';
+import UserUploadProfile from '../components/_dashboard/user/UserUploadProfile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
